@@ -6,25 +6,23 @@ webix.protoUI({
       function (config) {
          config.value = config.states[config.state]
 
-
          this.attachEvent('onItemClick', function () {
             let array = Object.keys(this.config.states)
             let currentKeyIndex = array.findIndex(el => el == this.config.state)
-            let nextIndex = array[currentKeyIndex + 1]
-            this.config.state = nextIndex
+            let nextState = array[currentKeyIndex + 1]
+            this.config.state = nextState
 
             if (currentKeyIndex + 1 >= array.length) {
-               nextIndex = array[0]
-               this.callEvent('onStateChange', [nextIndex])
-               this.config.value = this.config.states[nextIndex]
-               this.config.state = nextIndex
-               this.refresh()
+               nextState = array[0]
+               this.config.state = nextState
+               this.callEvent('onStateChange', [nextState])
             }
             else {
-               this.config.value = this.config.states[nextIndex]
-               this.refresh()
-               this.callEvent('onStateChange', [nextIndex])
+
+               this.callEvent('onStateChange', [nextState])
             }
+            this.config.value = this.config.states[nextState]
+            this.refresh()
          })
       }
 
