@@ -2,7 +2,6 @@ import { users } from "./usersdata.js";
 
 webix.protoUI({
    name: 'mybutton',
-   states: { 0: "Off", 1: "Sort Asc", 2: "Sort Desc" },
    $init:
       function (config) {
          config.value = config.states[config.state]
@@ -13,15 +12,15 @@ webix.protoUI({
             let currentKeyIndex = array.findIndex(el => el == this.config.state)
             let nextIndex = array[currentKeyIndex + 1]
             this.config.state = nextIndex
-            // console.log(currentKeyIndex);
-            // console.log(nextIndex);
-            // console.log(array);
-            if (nextIndex >= array.length) {
+
+            if (currentKeyIndex + 1 >= array.length) {
                nextIndex = array[0]
-               console.log(nextIndex);
+               this.callEvent('onStateChange', [nextIndex])
+               this.config.value = this.config.states[nextIndex]
+               this.config.state = nextIndex
                this.refresh()
-               return nextIndex
-            } else {
+            }
+            else {
                this.config.value = this.config.states[nextIndex]
                this.refresh()
                this.callEvent('onStateChange', [nextIndex])
@@ -37,21 +36,25 @@ const toolbar = {
       { view: 'label', template: "<div style='padding: 10px 0'> Sort list: </div>", fillspace: true },
       {
          view: 'mybutton', id: 'mybtn', width: 100,
-         states: { 0: "Off", 1: "SortAsc", 2: "Sort Desc" },
+         states: {
+            "off": "Off",
+            "asc": "SortAsc",
+            "desc": "Sort Desc"
+         },
 
-         state: 0, on: {
+         state: 'off', on: {
             onStateChange: function (state) {
-               if (state == 0) {
+               if (state == 'off') {
                   $$('mylist').sort("#rank#", 'asc', 'int')
                   webix.html.removeCss(this.$view, "desc_style");
                   webix.html.addCss(this.$view, "off_style");
                }
-               else if (state == 1) {
+               else if (state == "asc") {
                   $$('mylist').sort("#title#", 'asc', 'string')
                   webix.html.removeCss(this.$view, "off_style");
                   webix.html.addCss(this.$view, "asc_style");
                }
-               else if (state == 2) {
+               else if (state == "desc") {
                   $$('mylist').sort("#title#", 'desc', 'string')
                   webix.html.removeCss(this.$view, "acs_style");
                   webix.html.addCss(this.$view, "desc_style");
