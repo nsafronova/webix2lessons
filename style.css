@@ -1,0 +1,15 @@
+.asc_style .webix_el_box .webix_button {
+   background-color: rgb(237, 119, 68);
+}
+
+.desc_style .webix_el_box .webix_button {
+   background-color: aqua;
+}
+
+.off_style .webix_el_box .webix_button {
+   background-color: chartreuse;
+}
+
+.webix_el_box .webix_button {
+   color: white;
+}
