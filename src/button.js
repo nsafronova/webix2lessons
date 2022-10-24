@@ -1,14 +1,22 @@
 webix.protoUI({
    name: 'formControl',
    $init: function (config) {
+      config.rows = [
+         { view: 'text', }
+      ]
       config.elements = [
          {
             rows: [
-               { view: 'text', },
-               { fields: 'label' },
+               { view: 'text', }
+            ]
+         },
+
+         {
+            cols: [
+               { view: "button", value: "Cancel", },
+               { view: "button", value: "Save", css: 'webix_primary' }
             ]
          }
-
          //       {
          //  fields: {
          // }  rows: [
@@ -17,10 +25,7 @@ webix.protoUI({
          //       { view: 'text', label: 'Last name', name: 'lname', invalidMessage: 'Last name is empty' },
          //       { view: 'text', label: 'Adress', name: 'adress', invalidMessage: 'Adress is empty' },
          //       {
-         //          cols: [
-         //             { view: "button", value: "Cancel" },
-         //             { view: "button", value: "Save" }
-         //          ]
+
          //       }
          //    ]
          // }

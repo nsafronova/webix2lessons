@@ -62,8 +62,6 @@ const toolbar = {
                      break;
                }
                $$('list').sort(field, direction, type);
-               webix.html.removeCss(this.$view, oldStyle);
-               webix.html.addCss(this.$view, newStyle);
             }
          },
       }
