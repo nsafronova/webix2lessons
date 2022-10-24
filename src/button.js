@@ -1,57 +1,61 @@
-// webix.protoUI({
-//    name: 'formControl',
-//    $init: function (config) {
-//       config.rows = [
-//          { view: 'text', }
-//       ]
-//       config.elements = [
-//          {
-//             rows: [
-//                { view: 'text', }
-//             ]
-//          },
+let fieldsArray = [];
+const names = ["fname", "lname", "address"];
 
-//          {
-//             cols: [
-//                { view: "button", value: "Cancel", },
-//                { view: "button", value: "Save", css: 'webix_primary' }
-//             ]
-//          }
-//          //       {
-//          //  fields: {
-//          // }  rows: [
-//          //       { view: 'text', label: 'First name', name: 'fname', invalidMessage: 'First name is empty' },
+webix.ui({
+   view: "form",
+   id: 'myform',
+   rows: [
+      {
+         function() {
 
-//          //       { view: 'text', label: 'Last name', name: 'lname', invalidMessage: 'Last name is empty' },
-//          //       { view: 'text', label: 'Adress', name: 'adress', invalidMessage: 'Adress is empty' },
-//          //       {
-
-//          //       }
-//          //    ]
-//          // }
-//       ]
-//       this.attachEvent('saveAction', function () {
-//          console.log('gggg');
-//       })
-//    }
-// }, webix.ui.form)
-
-// const form1 = {
-//    view: 'formControl',
-//    fields: 'lname',
-//    // saveAction: my_func
-// }
-
-// const form2 = {
-//    view: 'formControl',
-//    // fields: ["one", "two"],
-//    // saveAction: my_func
-// }
+            $$('myform').add(fieldsArray)
+         }
+      },
+      {
+         cols: [
+            { view: "button", value: "Cancel" },
+            { view: "button", value: "Save", css: "webix_primary" }
+         ]
+      }
+   ]
 
 
-// webix.ui({
-//    rows: [
-//       form1,
-//       form2
-//    ]
-// })
+})
+
+
+const fillArray = function () {
+   for (let i = 0; i < names.length; i++) {
+      fieldsArray.push({
+         'view': "text",
+         'name': names[i],
+         'label': names[i].charAt(0).toUpperCase() + names[i].slice(1),
+      });
+
+   }
+   $$('myform').add(fieldsArray)
+}
+
+fillArray()
+console.log(fieldsArray)
+
+
+
+const form1 = {
+   view: 'formControl',
+   fields: 'lname',
+   // saveAction: my_func
+}
+
+const form2 = {
+   view: 'formControl',
+   // fields: ["one", "two"],
+   // saveAction: my_func
+}
+
+
+webix.ui({
+   rows: [
+      form1,
+      form2
+   ]
+})
