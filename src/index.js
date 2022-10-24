@@ -7,22 +7,21 @@ webix.protoUI({
          config.value = config.states[config.state]
 
          this.attachEvent('onItemClick', function () {
+            const oldState = this.config.state;
             let array = Object.keys(this.config.states)
             let currentKeyIndex = array.findIndex(el => el == this.config.state)
             let nextState = array[currentKeyIndex + 1]
-            this.config.state = nextState
 
             if (currentKeyIndex + 1 >= array.length) {
                nextState = array[0]
-               this.config.state = nextState
-               this.callEvent('onStateChange', [nextState])
-            }
-            else {
+            };
+            this.config.state = nextState;
+            this.config.value = this.config.states[nextState];
+            this.refresh();
 
-               this.callEvent('onStateChange', [nextState])
-            }
-            this.config.value = this.config.states[nextState]
-            this.refresh()
+            webix.html.removeCss(this.$view, `${oldState}_style`)
+            webix.html.addCss(this.$view, `${this.config.state}_style`)
+            this.callEvent('onStateChange', [this.config.state]);
          })
       }
 
@@ -42,21 +41,29 @@ const toolbar = {
 
          state: 'off', on: {
             onStateChange: function (state) {
-               if (state == 'off') {
-                  $$('mylist').sort("#rank#", 'asc', 'int')
-                  webix.html.removeCss(this.$view, "desc_style");
-                  webix.html.addCss(this.$view, "off_style");
+               let field, direction, type, oldStyle, newStyle;
+               switch (state) {
+                  case 'off':
+                     field = "#rank#"
+                     direction = 'asc'
+                     type = 'int'
+                     break;
+
+                  case 'asc':
+                     field = "#title#"
+                     direction = 'asc'
+                     type = 'string'
+                     break;
+
+                  case 'desc':
+                     field = "#title#"
+                     direction = 'desc'
+                     type = 'string'
+                     break;
                }
-               else if (state == "asc") {
-                  $$('mylist').sort("#title#", 'asc', 'string')
-                  webix.html.removeCss(this.$view, "off_style");
-                  webix.html.addCss(this.$view, "asc_style");
-               }
-               else if (state == "desc") {
-                  $$('mylist').sort("#title#", 'desc', 'string')
-                  webix.html.removeCss(this.$view, "acs_style");
-                  webix.html.addCss(this.$view, "desc_style");
-               }
+               $$('list').sort(field, direction, type);
+               webix.html.removeCss(this.$view, oldStyle);
+               webix.html.addCss(this.$view, newStyle);
             }
          },
       }
@@ -64,7 +71,7 @@ const toolbar = {
 }
 
 const list = {
-   id: 'mylist',
+   id: 'list',
    view: "list",
    width: 320,
    height: 600,
@@ -84,6 +91,3 @@ webix.ui({
    ]
 
 })
-
-// $$('mybtn').callEvent('onStateChange', [0])
-
