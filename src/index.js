@@ -41,7 +41,7 @@ const toolbar = {
 
          state: 'off', on: {
             onStateChange: function (state) {
-               let field, direction, type, oldStyle, newStyle;
+               let field, direction, type;
                switch (state) {
                   case 'off':
                      field = "#rank#"
