@@ -1,15 +1,14 @@
 webix.protoUI({
    name: "formControl",
    $init(config) {
-
       const content = []
-      let array = Object.keys(config.fields)
-      let formField = config.fields
+      const formField = config.fields || []
 
-      array.forEach(e => {
+      formField.forEach(e => {
          content.push({
             'view': "text",
-            'label': formField[e].charAt(0).toUpperCase() + formField[e].slice(1),
+            'name': e,
+            'label': e.charAt(0).toUpperCase() + e.slice(1),
          });
       });
 
@@ -17,18 +16,20 @@ webix.protoUI({
          cols: [
             {
                view: "button", name: 'save', value: "Save", css: "webix_primary", click: function () {
-                  if (config.saveAction != undefined) {
-                     config.saveAction()
+                  console.log(this.getFormView());
+                  if (this.getFormView().config.saveAction != undefined) {
+                     this.getFormView().config.saveAction.call(this)
                   } else {
                      console.log('Default save');
                   }
                }
+               // 
             },
             {},
             {
                view: "button", value: "Cancel", click: function () {
-                  if (config.saveAction != undefined) {
-                     config.saveAction()
+                  if (this.getFormView().config.cancelAction != undefined) {
+                     this.getFormView().config.cancelAction.call(this)
                   } else {
                      console.log('Default cancel');
                   }
@@ -47,7 +48,10 @@ const form1 = {
    view: "formControl",
    fields: ["one", "two", "three"],
    saveAction: function () {
-      console.log('Your own func is here');
+      console.log('Your own save func is here');
+   },
+   cancelAction: function () {
+      console.log('Your own cancel func is here');
    }
 }
 
@@ -64,3 +68,4 @@ webix.ui({
       form2
    ]
 });
+
