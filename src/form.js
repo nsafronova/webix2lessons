@@ -18,7 +18,7 @@ webix.protoUI({
                view: "button", name: 'save', value: "Save", css: "webix_primary", click: function () {
                   console.log(this.getFormView());
                   if (this.getFormView().config.saveAction != undefined) {
-                     this.getFormView().config.saveAction.call(this)
+                     this.getFormView().config.saveAction.call(this.getFormView())
                   } else {
                      console.log('Default save');
                   }
@@ -48,6 +48,7 @@ const form1 = {
    view: "formControl",
    fields: ["one", "two", "three"],
    saveAction: function () {
+      console.log(this);
       console.log('Your own save func is here');
    },
    cancelAction: function () {
