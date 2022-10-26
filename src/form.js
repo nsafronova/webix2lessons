@@ -29,7 +29,7 @@ webix.protoUI({
             {
                view: "button", value: "Cancel", click: function () {
                   if (this.getFormView().config.cancelAction != undefined) {
-                     this.getFormView().config.cancelAction.call(this)
+                     this.getFormView().config.cancelAction.call(this.getFormView())
                   } else {
                      console.log('Default cancel');
                   }
