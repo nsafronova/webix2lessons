@@ -16,21 +16,21 @@ webix.protoUI({
          cols: [
             {
                view: "button", name: 'save', value: "Save", css: "webix_primary", click: function () {
-                  console.log(this.getFormView());
-                  if (this.getFormView().config.saveAction != undefined) {
-                     this.getFormView().config.saveAction.call(this.getFormView())
-                  } else {
+                  const form = this.getFormView();
+                  if (form.config.saveAction)
+                     form.config.saveAction.call(form)
+                  else {
                      console.log('Default save');
                   }
                }
-               // 
             },
             {},
             {
                view: "button", value: "Cancel", click: function () {
-                  if (this.getFormView().config.cancelAction != undefined) {
-                     this.getFormView().config.cancelAction.call(this.getFormView())
-                  } else {
+                  const form = this.getFormView();
+                  if (form.config.cancelAction)
+                     form.config.cancelAction.call(form)
+                  else {
                      console.log('Default cancel');
                   }
                }
@@ -48,7 +48,6 @@ const form1 = {
    view: "formControl",
    fields: ["one", "two", "three"],
    saveAction: function () {
-      console.log(this);
       console.log('Your own save func is here');
    },
    cancelAction: function () {
